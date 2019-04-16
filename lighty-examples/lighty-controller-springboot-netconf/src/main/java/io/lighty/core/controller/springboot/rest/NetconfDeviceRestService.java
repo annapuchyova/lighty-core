@@ -88,11 +88,12 @@ public class NetconfDeviceRestService {
                 for (Node node : netconfTopoOptional.get().getNode()) {
                     NetconfDeviceResponse nodeResponse = NetconfDeviceResponse.from(node);
 
-                    final Optional<MountPoint> netconfMountPoint = mountPointService.getMountPoint(NETCONF_TOPOLOGY_IID
+                    final com.google.common.base.Optional<MountPoint> netconfMountPoint =
+                        mountPointService.getMountPoint(NETCONF_TOPOLOGY_IID
                             .child(Node.class, new NodeKey(node.getNodeId())));
 
                     if (netconfMountPoint.isPresent()) {
-                        final Optional<DataBroker> netconfDataBroker =
+                        final com.google.common.base.Optional<DataBroker> netconfDataBroker =
                             netconfMountPoint.get().getService(DataBroker.class);
                         if (netconfDataBroker.isPresent()) {
                             final ReadTransaction netconfReadTx =

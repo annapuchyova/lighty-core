@@ -166,7 +166,7 @@ public abstract class AbstractCodecTest {
      * 
      * @return {@link List} of loaded {@link YangModuleInfo}
      */
-    private static List<YangModuleInfo> loadModuleInfos() {
+    private List<YangModuleInfo> loadModuleInfos() {
         List<YangModuleInfo> moduleInfos = new LinkedList<>();
         ServiceLoader<YangModelBindingProvider> yangProviderLoader = ServiceLoader.load(YangModelBindingProvider.class);
         for (YangModelBindingProvider yangModelBindingProvider : yangProviderLoader) {
@@ -184,7 +184,8 @@ public abstract class AbstractCodecTest {
      */
     private SchemaContext getSchemaContext(List<YangModuleInfo> moduleInfos) {
         moduleInfoBackedCntxt.addModuleInfos(moduleInfos);
-        Optional<SchemaContext> tryToCreateSchemaContext = moduleInfoBackedCntxt.tryToCreateSchemaContext();
+        Optional<SchemaContext> tryToCreateSchemaContext =
+                moduleInfoBackedCntxt.tryToCreateSchemaContext().toJavaUtil();
         if (!tryToCreateSchemaContext.isPresent()) {
             throw new IllegalStateException();
         }

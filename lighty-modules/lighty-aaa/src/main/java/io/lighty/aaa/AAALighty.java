@@ -13,10 +13,11 @@ import io.lighty.server.LightyServerBuilder;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
+import java.util.function.BiConsumer;
 import org.opendaylight.aaa.api.CredentialAuth;
 import org.opendaylight.aaa.api.PasswordCredentials;
 import org.opendaylight.aaa.cert.api.ICertificateManager;
-import org.opendaylight.mdsal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.DatastoreConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.aaa.app.config.rev170619.ShiroConfiguration;
 import org.opendaylight.yangtools.yang.binding.YangModuleInfo;
@@ -70,9 +71,12 @@ public final class AAALighty extends AbstractLightyModule {
                 this.moonEndpointPath, this.oauth2EndpointPath, this.datastoreConfig, this.dbUsername, this.dbPassword,
                 this.server);
         final CountDownLatch cdl = new CountDownLatch(1);
-        newInstance.whenComplete((t, u) -> {
-            AAALighty.this.aaaShiroProviderHandler.setAaaLightyShiroProvider(t);
-            cdl.countDown();
+        newInstance.whenComplete(new BiConsumer<AAALightyShiroProvider, Throwable>() {
+            @Override
+            public void accept(final AAALightyShiroProvider t, final Throwable u) {
+                AAALighty.this.aaaShiroProviderHandler.setAaaLightyShiroProvider(t);
+                cdl.countDown();
+            }
         });
         try {
             cdl.await();

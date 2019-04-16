@@ -8,7 +8,6 @@
 package io.lighty.core.controller.impl.tests;
 
 import io.lighty.core.controller.api.LightyController;
-import java.util.Optional;
 import org.opendaylight.mdsal.dom.api.DOMMountPoint;
 import org.opendaylight.mdsal.dom.api.DOMMountPointListener;
 import org.opendaylight.mdsal.dom.api.DOMMountPointService;
@@ -47,14 +46,16 @@ public class LightyControllerMountPointTetst extends LightyControllerTestBase {
         final ObjectRegistration<DOMMountPoint> mountPointRegistration = mountPointBuilder.register();
 
         // 2. get MP from service service
-        final Optional<DOMMountPoint> registeredMP = domMountPointService.getMountPoint(testYangIID);
+        final com.google.common.base.Optional<DOMMountPoint> registeredMP = domMountPointService.getMountPoint(
+                testYangIID);
         Assert.assertTrue(registeredMP.isPresent());
 
         // 3. unregister registered MP
         mountPointRegistration.close();
 
         // 4. check if there isn't registered any MP
-        final Optional<DOMMountPoint> unregisterredMP = domMountPointService.getMountPoint(testYangIID);
+        final com.google.common.base.Optional<DOMMountPoint> unregisterredMP = domMountPointService.getMountPoint(
+                testYangIID);
         Assert.assertFalse(unregisterredMP.isPresent());
 
         // check if MP listener methods were called

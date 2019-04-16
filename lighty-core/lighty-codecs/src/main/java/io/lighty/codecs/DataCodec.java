@@ -7,12 +7,8 @@
  */
 package io.lighty.codecs;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import io.lighty.codecs.api.Codec;
 import io.lighty.codecs.api.NodeConverter;
-import io.lighty.codecs.xml.XmlElement;
-import io.lighty.codecs.xml.XmlUtil;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -20,16 +16,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
-import javassist.ClassPool;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.dom.DOMSource;
-import org.opendaylight.mdsal.binding.dom.adapter.BindingToNormalizedNodeCodec;
-import org.opendaylight.mdsal.binding.dom.codec.gen.impl.StreamWriterGenerator;
-import org.opendaylight.mdsal.binding.dom.codec.impl.BindingNormalizedNodeCodecRegistry;
+
+import io.lighty.codecs.xml.XmlElement;
+import io.lighty.codecs.xml.XmlUtil;
+import org.opendaylight.controller.md.sal.binding.impl.BindingToNormalizedNodeCodec;
+import org.opendaylight.controller.md.sal.binding.impl.BindingToNormalizedNodeCodecFactory;
 import org.opendaylight.mdsal.binding.generator.impl.GeneratedClassLoadingStrategy;
-import org.opendaylight.mdsal.binding.generator.util.JavassistUtils;
 import org.opendaylight.restconf.common.errors.RestconfDocumentedException;
 import org.opendaylight.yangtools.rfc8040.model.api.YangDataSchemaNode;
 import org.opendaylight.yangtools.yang.binding.DataContainer;
@@ -56,6 +52,8 @@ import org.opendaylight.yangtools.yang.model.api.UnknownSchemaNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 public class DataCodec<T extends DataObject> implements Codec<T> {
 
@@ -74,10 +72,8 @@ public class DataCodec<T extends DataObject> implements Codec<T> {
     private final SchemaContext schemaContext;
 
     public DataCodec(final SchemaContext schemaContext) {
-        final BindingNormalizedNodeCodecRegistry registry = new BindingNormalizedNodeCodecRegistry(
-            StreamWriterGenerator.create(JavassistUtils.forClassPool(ClassPool.getDefault())));
-        this.codec = new BindingToNormalizedNodeCodec(GeneratedClassLoadingStrategy.getTCCLClassLoadingStrategy(),
-            registry);
+        this.codec = BindingToNormalizedNodeCodecFactory.newInstance(
+                GeneratedClassLoadingStrategy.getTCCLClassLoadingStrategy());
         this.schemaContext = schemaContext;
         this.codec.onGlobalContextUpdated(schemaContext);
         this.deserializeIdentifierCodec = new DeserializeIdentifierCodec(schemaContext);
@@ -93,7 +89,7 @@ public class DataCodec<T extends DataObject> implements Codec<T> {
     }
 
     @Override
-    public Collection<T> convertBindingAwareList(final YangInstanceIdentifier identifier, final MapNode mapNode) {
+    public Collection<T> convertBindingAwareList(final YangInstanceIdentifier identifier, MapNode mapNode) {
         Collection<MapEntryNode> children = mapNode.getValue();
         List<T> resultList = Lists.newArrayListWithCapacity(children.size());
         for(MapEntryNode entry : children) {
