@@ -63,7 +63,7 @@ public class SwaggerLighty extends AbstractLightyModule {
         switch (restConfConfiguration.getJsonRestconfServiceType()) {
             case DRAFT_02: {
                 mountPointSwaggerGeneratorDraft02 =
-                        new MountPointSwaggerGeneratorDraft02(lightyServices.getDOMSchemaService(), lightyServices.getControllerDOMMountPointService(), basePathString);
+                        new MountPointSwaggerGeneratorDraft02(lightyServices.getDOMSchemaService(), lightyServices.getDOMMountPointService(), basePathString);
                 ApiDocGeneratorDraftO2 apiDocGeneratorDraft02 = new ApiDocGeneratorDraftO2(lightyServices.getDOMSchemaService(), basePathString);
                 ApiDocService apiDocService = new ApiDocServiceDraft02(mountPointSwaggerGeneratorDraft02, apiDocGeneratorDraft02);
                 ApiDocApplication apiDocApplication = new ApiDocApplication(apiDocService);
@@ -79,7 +79,7 @@ public class SwaggerLighty extends AbstractLightyModule {
             }
             case DRAFT_18: {
                 mountPointSwaggerGeneratorRFC8040 =
-                        new MountPointSwaggerGeneratorRFC8040(lightyServices.getDOMSchemaService(), lightyServices.getControllerDOMMountPointService(),basePathString);
+                        new MountPointSwaggerGeneratorRFC8040(lightyServices.getDOMSchemaService(), lightyServices.getDOMMountPointService(),basePathString);
                 ApiDocGeneratorRFC8040 apiDocGeneratorRFC8040 = new ApiDocGeneratorRFC8040(lightyServices.getDOMSchemaService(), basePathString);
                 ApiDocService apiDocService = new ApiDocServiceRFC8040(mountPointSwaggerGeneratorRFC8040, apiDocGeneratorRFC8040);
                 ApiDocApplication apiDocApplication = new ApiDocApplication(apiDocService);

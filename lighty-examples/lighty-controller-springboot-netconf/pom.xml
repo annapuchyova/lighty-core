@@ -17,7 +17,7 @@
 
     <groupId>io.lighty.core</groupId>
     <artifactId>lighty-controller-springboot</artifactId>
-    <version>9.2.1-SNAPSHOT</version>
+    <version>10.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <description>Demo lighty.io project for SpringBoot</description>
 
@@ -34,7 +34,7 @@
             <dependency>
                 <groupId>io.lighty.core</groupId>
                 <artifactId>lighty-bom</artifactId>
-                <version>9.2.1-SNAPSHOT</version>
+                <version>10.0.1-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -42,14 +42,9 @@
     </dependencyManagement>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
         <dependency>
@@ -71,12 +66,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.casbin</groupId>
-            <artifactId>jcasbin</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -84,7 +73,7 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-client</artifactId>
-            <version>9.4.11.v20180605</version>
+            <version>9.4.12.v20180830</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

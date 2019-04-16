@@ -12,7 +12,7 @@
     <parent>
         <groupId>io.lighty.core</groupId>
         <artifactId>lighty-app-parent</artifactId>
-        <version>9.2.1-SNAPSHOT</version>
+        <version>10.0.1-SNAPSHOT</version>
         <relativePath>../../lighty-core/lighty-app-parent</relativePath>
     </parent>
 
@@ -72,6 +72,10 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlets</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-common</artifactId>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
