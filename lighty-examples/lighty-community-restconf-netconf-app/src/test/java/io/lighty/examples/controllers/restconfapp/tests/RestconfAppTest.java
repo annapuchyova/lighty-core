@@ -47,7 +47,21 @@ public class RestconfAppTest {
      * Perform basic GET operations via RESTCONF
      */
     @Test
-    public void simpleApplicationTest() {
+    public void simpleApplicationTest() throws TimeoutException, ExecutionException, InterruptedException {
+        ContentResponse operations = null;
+        operations = restClient.GET("restconf/operations");
+        Assert.assertEquals(operations.getStatus(), 200);
+        operations = restClient.GET("restconf/data/network-topology:network-topology?content=config");
+        Assert.assertEquals(operations.getStatus(), 200);
+        operations = restClient.GET("restconf/data/network-topology:network-topology?content=nonconfig");
+        Assert.assertEquals(operations.getStatus(), 200);
+    }
+
+    /**
+     * Check if Swagger service and UI is responding.
+     */
+    @Test
+    public void swaggerURLsTest() {
         ContentResponse operations = null;
         try {
             operations = restClient.GET("restconf/operations");

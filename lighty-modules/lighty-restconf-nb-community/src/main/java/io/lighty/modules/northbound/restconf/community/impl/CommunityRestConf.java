@@ -197,7 +197,7 @@ public class CommunityRestConf extends AbstractLightyModule {
     }
 
     public void startServer() {
-        if ((this.jettyServer != null) && !this.jettyServer.isStopped()) {
+        if (this.jettyServer != null && !this.jettyServer.isStopped()) {
             return;
         }
         try {
